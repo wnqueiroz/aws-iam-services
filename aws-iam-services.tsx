@@ -1,256 +1,64 @@
-"use client"
+"use client";
 
-import { useState, useMemo } from "react"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import React, { useState, useMemo } from "react";
 
-interface ServiceData {
-  service: string
-  serviceLink: string
-  actions: string
-  resourceLevel: string
-  resourceLevelLink?: string
-  resourceBased: string
-  resourceBasedLink?: string
-  abac: string
-  abacLink?: string
-  temporaryCredentials: string
-  serviceLinkedRoles: string
-  serviceLinkedRolesLink?: string
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+
+import servicesData, { ServiceData } from "./aws-services-iam-data";
+
+function Link({ children, href }: { href: string; children: React.ReactNode }) {
+  return (
+    <a
+      href={href}
+      className="text-blue-600 hover:text-blue-800"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {children}
+    </a>
+  );
 }
-
-const servicesData: ServiceData[] = [
-  {
-    service: "AWS Account Management",
-    serviceLink: "https://docs.aws.amazon.com/accounts/latest/reference/",
-    actions: "Yes",
-    resourceLevel: "Yes",
-    resourceBased: "No",
-    abac: "No",
-    temporaryCredentials: "Yes",
-    serviceLinkedRoles: "No",
-  },
-  {
-    service: "AWS Activate Console",
-    serviceLink: "https://aws.amazon.com/activate/faq/#AWS_Activate_Console",
-    actions: "Yes",
-    resourceLevel: "No",
-    resourceBased: "No",
-    abac: "No",
-    temporaryCredentials: "Yes",
-    serviceLinkedRoles: "No",
-  },
-  {
-    service: "Amazon AI Operations",
-    serviceLink: "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/auth-and-access-control-cw.html",
-    actions: "Yes",
-    resourceLevel: "Yes",
-    resourceBased: "No",
-    abac: "Yes",
-    temporaryCredentials: "Yes",
-    serviceLinkedRoles: "No",
-  },
-  {
-    service: "AWS Amplify Admin",
-    serviceLink: "https://docs.aws.amazon.com/amplify-admin-ui/latest/APIReference/what-is-admin-ui.html",
-    actions: "Yes",
-    resourceLevel: "Yes",
-    resourceBased: "No",
-    abac: "No",
-    temporaryCredentials: "Yes",
-    serviceLinkedRoles: "No",
-  },
-  {
-    service: "AWS Amplify",
-    serviceLink: "https://docs.aws.amazon.com/amplify/latest/userguide/security-iam.html",
-    actions: "Yes",
-    resourceLevel: "Yes",
-    resourceBased: "No",
-    abac: "Partial",
-    temporaryCredentials: "Yes",
-    serviceLinkedRoles: "No",
-  },
-  {
-    service: "Amazon API Gateway",
-    serviceLink: "https://docs.aws.amazon.com/apigateway/latest/developerguide/permissions.html",
-    actions: "Yes",
-    resourceLevel: "Yes",
-    resourceBased: "Yes",
-    abac: "No",
-    temporaryCredentials: "Yes",
-    serviceLinkedRoles: "Yes",
-    serviceLinkedRolesLink:
-      "https://docs.aws.amazon.com/apigateway/latest/developerguide/using-service-linked-roles.html",
-  },
-  {
-    service: "AWS Batch",
-    serviceLink: "https://docs.aws.amazon.com/batch/latest/userguide/IAM_policies.html",
-    actions: "Yes",
-    resourceLevel: "Partial",
-    resourceLevelLink: "https://docs.aws.amazon.com/batch/latest/userguide/batch-supported-iam-actions-resources.html",
-    resourceBased: "No",
-    abac: "Yes",
-    temporaryCredentials: "Yes",
-    serviceLinkedRoles: "Yes",
-    serviceLinkedRolesLink: "https://docs.aws.amazon.com/batch/latest/userguide/using-service-linked-roles.html",
-  },
-  {
-    service: "Amazon Bedrock",
-    serviceLink: "https://docs.aws.amazon.com/bedrock/latest/APIReference/welcome.html",
-    actions: "Yes",
-    resourceLevel: "Yes",
-    resourceBased: "No",
-    abac: "Yes",
-    temporaryCredentials: "Yes",
-    serviceLinkedRoles: "No",
-  },
-  {
-    service: "AWS CloudFormation",
-    serviceLink: "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html",
-    actions: "Yes",
-    resourceLevel: "Yes",
-    resourceBased: "No",
-    abac: "Yes",
-    temporaryCredentials: "Yes",
-    serviceLinkedRoles: "No",
-  },
-  {
-    service: "Amazon CloudFront",
-    serviceLink: "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/auth-and-access-control.html",
-    actions: "Yes",
-    resourceLevel: "Yes",
-    resourceBased: "No",
-    abac: "Partial",
-    abacLink:
-      "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/security_iam_service-with-iam.html#security_iam_service-with-iam-tags",
-    temporaryCredentials: "Yes",
-    serviceLinkedRoles: "Yes",
-    serviceLinkedRolesLink:
-      "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-service-linked-roles.html",
-  },
-  {
-    service: "Amazon CloudWatch",
-    serviceLink: "https://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/UsingIAM.html",
-    actions: "Yes",
-    resourceLevel: "Yes",
-    resourceBased: "No",
-    abac: "Yes",
-    temporaryCredentials: "Yes",
-    serviceLinkedRoles: "Partial",
-    serviceLinkedRolesLink:
-      "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/using-service-linked-roles.html",
-  },
-  {
-    service: "Amazon DynamoDB",
-    serviceLink: "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/UsingIAMWithDDB.html",
-    actions: "Yes",
-    resourceLevel: "Yes",
-    resourceBased: "Yes",
-    abac: "Yes",
-    temporaryCredentials: "Yes",
-    serviceLinkedRoles: "Yes",
-    serviceLinkedRolesLink:
-      "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/security_iam_service-with-iam.html#security_iam_service-with-iam-roles-service-linked",
-  },
-  {
-    service: "Amazon EC2",
-    serviceLink: "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-iam.html",
-    actions: "Yes",
-    resourceLevel: "Partial",
-    resourceBased: "No",
-    abac: "Yes",
-    abacLink: "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html#tag-resources",
-    temporaryCredentials: "Yes",
-    serviceLinkedRoles: "Info",
-  },
-  {
-    service: "Amazon EKS",
-    serviceLink: "https://docs.aws.amazon.com/eks/latest/userguide/IAM_policies.html",
-    actions: "Yes",
-    resourceLevel: "Yes",
-    resourceBased: "No",
-    abac: "Yes",
-    temporaryCredentials: "Yes",
-    serviceLinkedRoles: "Yes",
-    serviceLinkedRolesLink: "https://docs.aws.amazon.com/eks/latest/userguide/using-service-linked-roles.html",
-  },
-  {
-    service: "AWS Lambda",
-    serviceLink: "https://docs.aws.amazon.com/lambda/latest/dg/lambda-auth-and-access-control.html",
-    actions: "Yes",
-    resourceLevel: "Yes",
-    resourceBased: "Yes",
-    resourceBasedLink: "https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html",
-    abac: "Partial",
-    abacLink: "https://docs.aws.amazon.com/lambda/latest/dg/attribute-based-access-control.html",
-    temporaryCredentials: "Yes",
-    serviceLinkedRoles: "Partial",
-    serviceLinkedRolesLink:
-      "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-edge-permissions.html#using-service-linked-roles",
-  },
-  {
-    service: "Amazon RDS",
-    serviceLink: "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAM.html",
-    actions: "Yes",
-    resourceLevel: "Yes",
-    resourceBased: "No",
-    abac: "Yes",
-    temporaryCredentials: "Yes",
-    serviceLinkedRoles: "Yes",
-    serviceLinkedRolesLink:
-      "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAM.ServiceLinkedRoles.html",
-  },
-  {
-    service: "Amazon S3",
-    serviceLink: "https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-overview.html",
-    actions: "Yes",
-    resourceLevel: "Yes",
-    resourceBased: "Yes",
-    abac: "Partial",
-    abacLink: "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-tagging.html",
-    temporaryCredentials: "Yes",
-    serviceLinkedRoles: "Partial",
-    serviceLinkedRolesLink: "https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-service-linked-roles.html",
-  },
-  {
-    service: "Amazon VPC",
-    serviceLink: "https://docs.aws.amazon.com/vpc/latest/userguide/VPC_IAM.html",
-    actions: "Yes",
-    resourceLevel: "Info",
-    resourceBased: "Info",
-    abac: "Yes",
-    temporaryCredentials: "Yes",
-    serviceLinkedRoles: "Partial",
-    serviceLinkedRolesLink: "https://docs.aws.amazon.com/vpc/latest/tgw/service-linked-roles.html",
-  },
-]
 
 function formatValue(value: string, link?: string) {
-  if (value === "Yes") return "✅"
-  if (value === "No") return "❌"
+  if (value === "Yes") return "✅";
+  if (value === "No") return "❌";
   if (value === "Partial" && link) {
-    return (
-      <a href={link} className="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">
-        Partial
-      </a>
-    )
+    return <Link href={link}>Partial</Link>;
   }
   if (value === "Info" && link) {
-    return (
-      <a href={link} className="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">
-        Info
-      </a>
-    )
+    return <Link href={link}>Info</Link>;
   }
-  if (value === "Partial") return "Partial"
-  if (value === "Info") return "Info"
-  return value
+  if (value === "Partial") return "Partial";
+  if (value === "Info") return "Info";
+  return value;
 }
 
-function EmptyState({ searchTerm, hasActiveFilters }: { searchTerm: string; hasActiveFilters: boolean }) {
+function EmptyState({
+  searchTerm,
+  hasActiveFilters,
+  clearAllFilters,
+}: {
+  searchTerm: string;
+  hasActiveFilters: boolean;
+  clearAllFilters: () => void
+}) {
   return (
     <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
       <div className="w-16 h-16 mb-4 rounded-full bg-muted flex items-center justify-center">
@@ -272,12 +80,13 @@ function EmptyState({ searchTerm, hasActiveFilters }: { searchTerm: string; hasA
       <h3 className="text-lg font-semibold mb-2">No services found</h3>
       {searchTerm ? (
         <p className="text-muted-foreground mb-4 max-w-md">
-          No AWS services match your search for "{searchTerm}". Try adjusting your search term or clearing some filters.
+          No AWS services match your search for "{searchTerm}". Try adjusting
+          your search term or clearing some filters.
         </p>
       ) : hasActiveFilters ? (
         <p className="text-muted-foreground mb-4 max-w-md">
-          No AWS services match your current filter criteria. Try adjusting or clearing some filters to see more
-          results.
+          No AWS services match your current filter criteria. Try adjusting or
+          clearing some filters to see more results.
         </p>
       ) : (
         <p className="text-muted-foreground mb-4 max-w-md">
@@ -286,46 +95,58 @@ function EmptyState({ searchTerm, hasActiveFilters }: { searchTerm: string; hasA
       )}
       <div className="flex flex-col sm:flex-row gap-2">
         <button
-          onClick={() => window.location.reload()}
+          // onClick={() => window.location.reload()}
+          onClick={() => clearAllFilters()}
           className="px-4 py-2 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
         >
           Clear all filters
         </button>
       </div>
     </div>
-  )
+  );
 }
 
 export default function AWSIAMServicesTable() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [actionsFilter, setActionsFilter] = useState("all")
-  const [resourceLevelFilter, setResourceLevelFilter] = useState("all")
-  const [resourceBasedFilter, setResourceBasedFilter] = useState("all")
-  const [abacFilter, setAbacFilter] = useState("all")
-  const [temporaryCredentialsFilter, setTemporaryCredentialsFilter] = useState("all")
-  const [serviceLinkedRolesFilter, setServiceLinkedRolesFilter] = useState("all")
+  const [searchTerm, setSearchTerm] = useState("");
+  const [actionsFilter, setActionsFilter] = useState("all");
+  const [resourceLevelFilter, setResourceLevelFilter] = useState("all");
+  const [resourceBasedFilter, setResourceBasedFilter] = useState("all");
+  const [abacFilter, setAbacFilter] = useState("all");
+  const [temporaryCredentialsFilter, setTemporaryCredentialsFilter] =
+    useState("all");
+  const [serviceLinkedRolesFilter, setServiceLinkedRolesFilter] =
+    useState("all");
 
   const clearAllFilters = () => {
-    setSearchTerm("")
-    setActionsFilter("all")
-    setResourceLevelFilter("all")
-    setResourceBasedFilter("all")
-    setAbacFilter("all")
-    setTemporaryCredentialsFilter("all")
-    setServiceLinkedRolesFilter("all")
-  }
+    setSearchTerm("");
+    setActionsFilter("all");
+    setResourceLevelFilter("all");
+    setResourceBasedFilter("all");
+    setAbacFilter("all");
+    setTemporaryCredentialsFilter("all");
+    setServiceLinkedRolesFilter("all");
+  };
 
   const filteredData = useMemo(() => {
     return servicesData.filter((service) => {
-      const matchesSearch = service.service.toLowerCase().includes(searchTerm.toLowerCase())
-      const matchesActions = actionsFilter === "all" || service.actions === actionsFilter
-      const matchesResourceLevel = resourceLevelFilter === "all" || service.resourceLevel === resourceLevelFilter
-      const matchesResourceBased = resourceBasedFilter === "all" || service.resourceBased === resourceBasedFilter
-      const matchesAbac = abacFilter === "all" || service.abac === abacFilter
+      const matchesSearch = service.service
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      const matchesActions =
+        actionsFilter === "all" || service.actions === actionsFilter;
+      const matchesResourceLevel =
+        resourceLevelFilter === "all" ||
+        service.resourceLevel === resourceLevelFilter;
+      const matchesResourceBased =
+        resourceBasedFilter === "all" ||
+        service.resourceBased === resourceBasedFilter;
+      const matchesAbac = abacFilter === "all" || service.abac === abacFilter;
       const matchesTemporaryCredentials =
-        temporaryCredentialsFilter === "all" || service.temporaryCredentials === temporaryCredentialsFilter
+        temporaryCredentialsFilter === "all" ||
+        service.temporaryCredentials === temporaryCredentialsFilter;
       const matchesServiceLinkedRoles =
-        serviceLinkedRolesFilter === "all" || service.serviceLinkedRoles === serviceLinkedRolesFilter
+        serviceLinkedRolesFilter === "all" ||
+        service.serviceLinkedRoles === serviceLinkedRolesFilter;
 
       return (
         matchesSearch &&
@@ -335,8 +156,8 @@ export default function AWSIAMServicesTable() {
         matchesAbac &&
         matchesTemporaryCredentials &&
         matchesServiceLinkedRoles
-      )
-    })
+      );
+    });
   }, [
     searchTerm,
     actionsFilter,
@@ -345,12 +166,14 @@ export default function AWSIAMServicesTable() {
     abacFilter,
     temporaryCredentialsFilter,
     serviceLinkedRolesFilter,
-  ])
+  ]);
 
   const uniqueValues = (field: keyof ServiceData) => {
-    const values = [...new Set(servicesData.map((service) => service[field] as string))]
-    return values.filter((value) => value && value !== "")
-  }
+    const values = [
+      ...new Set(servicesData.map((service) => service[field] as string)),
+    ];
+    return values.filter((value) => value && value !== "");
+  };
 
   const hasActiveFilters = () => {
     return (
@@ -360,20 +183,25 @@ export default function AWSIAMServicesTable() {
       abacFilter !== "all" ||
       temporaryCredentialsFilter !== "all" ||
       serviceLinkedRolesFilter !== "all"
-    )
-  }
+    );
+  };
 
   return (
     <div className="container mx-auto p-6 space-y-6">
       {/* AWS Header Image */}
-      <div className="w-full mb-8">
-        <img src="/aws-header.png" alt="AWS Services Header" className="w-full h-auto rounded-lg shadow-sm" />
-      </div>
+      {/* <div className="w-full mb-8">
+        <img src="https://media.licdn.com/dms/image/v2/C4E16AQEm8nzOyZDEPw/profile-displaybackgroundimage-shrink_350_1400/profile-displaybackgroundimage-shrink_350_1400/0/1586809796854?e=1757548800&v=beta&t=eGjjdbDGyQcUwUNSa_bbHdr1po5SveqJ6BlOb_3pw-E" alt="AWS Services Header" className="w-full h-auto rounded-lg shadow-sm" />
+      </div> */}
 
       <div className="text-center">
-        <h2 className="text-3xl font-bold tracking-tight">Services that work with AWS IAM</h2>
+        <h2 className="text-3xl font-bold tracking-tight">
+          <Link href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html#all_svcs">
+            Services that work with IAM
+          </Link>
+        </h2>
         <p className="text-muted-foreground mt-2">
-          Comprehensive list of AWS services and their IAM compatibility features
+          Comprehensive list of AWS services and their IAM compatibility
+          features
         </p>
       </div>
 
@@ -410,8 +238,13 @@ export default function AWSIAMServicesTable() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Resource-level permissions</label>
-              <Select value={resourceLevelFilter} onValueChange={setResourceLevelFilter}>
+              <label className="text-sm font-medium">
+                Resource-level permissions
+              </label>
+              <Select
+                value={resourceLevelFilter}
+                onValueChange={setResourceLevelFilter}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Filter by Resource-level" />
                 </SelectTrigger>
@@ -427,8 +260,13 @@ export default function AWSIAMServicesTable() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Resource-based policies</label>
-              <Select value={resourceBasedFilter} onValueChange={setResourceBasedFilter}>
+              <label className="text-sm font-medium">
+                Resource-based policies
+              </label>
+              <Select
+                value={resourceBasedFilter}
+                onValueChange={setResourceBasedFilter}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Filter by Resource-based" />
                 </SelectTrigger>
@@ -461,8 +299,13 @@ export default function AWSIAMServicesTable() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Temporary credentials</label>
-              <Select value={temporaryCredentialsFilter} onValueChange={setTemporaryCredentialsFilter}>
+              <label className="text-sm font-medium">
+                Temporary credentials
+              </label>
+              <Select
+                value={temporaryCredentialsFilter}
+                onValueChange={setTemporaryCredentialsFilter}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Filter by Temporary credentials" />
                 </SelectTrigger>
@@ -478,8 +321,13 @@ export default function AWSIAMServicesTable() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Service-linked roles</label>
-              <Select value={serviceLinkedRolesFilter} onValueChange={setServiceLinkedRolesFilter}>
+              <label className="text-sm font-medium">
+                Service-linked roles
+              </label>
+              <Select
+                value={serviceLinkedRolesFilter}
+                onValueChange={setServiceLinkedRolesFilter}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Filter by Service-linked roles" />
                 </SelectTrigger>
@@ -513,18 +361,30 @@ export default function AWSIAMServicesTable() {
                 <TableRow>
                   <TableHead className="min-w-[250px]">Service</TableHead>
                   <TableHead className="text-center">Actions</TableHead>
-                  <TableHead className="text-center">Resource-level permissions</TableHead>
-                  <TableHead className="text-center">Resource-based policies</TableHead>
+                  <TableHead className="text-center">
+                    Resource-level permissions
+                  </TableHead>
+                  <TableHead className="text-center">
+                    Resource-based policies
+                  </TableHead>
                   <TableHead className="text-center">ABAC</TableHead>
-                  <TableHead className="text-center">Temporary credentials</TableHead>
-                  <TableHead className="text-center">Service-linked roles</TableHead>
+                  <TableHead className="text-center">
+                    Temporary credentials
+                  </TableHead>
+                  <TableHead className="text-center">
+                    Service-linked roles
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredData.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={7} className="p-0">
-                      <EmptyState searchTerm={searchTerm} hasActiveFilters={hasActiveFilters()} />
+                      <EmptyState
+                        searchTerm={searchTerm}
+                        clearAllFilters={clearAllFilters}
+                        hasActiveFilters={hasActiveFilters()}
+                      />
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -540,17 +400,32 @@ export default function AWSIAMServicesTable() {
                           {service.service}
                         </a>
                       </TableCell>
-                      <TableCell className="text-center">{formatValue(service.actions)}</TableCell>
                       <TableCell className="text-center">
-                        {formatValue(service.resourceLevel, service.resourceLevelLink)}
+                        {formatValue(service.actions)}
                       </TableCell>
                       <TableCell className="text-center">
-                        {formatValue(service.resourceBased, service.resourceBasedLink)}
+                        {formatValue(
+                          service.resourceLevel,
+                          service.resourceLevelLink
+                        )}
                       </TableCell>
-                      <TableCell className="text-center">{formatValue(service.abac, service.abacLink)}</TableCell>
-                      <TableCell className="text-center">{formatValue(service.temporaryCredentials)}</TableCell>
                       <TableCell className="text-center">
-                        {formatValue(service.serviceLinkedRoles, service.serviceLinkedRolesLink)}
+                        {formatValue(
+                          service.resourceBased,
+                          service.resourceBasedLink
+                        )}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {formatValue(service.abac, service.abacLink)}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {formatValue(service.temporaryCredentials)}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {formatValue(
+                          service.serviceLinkedRoles,
+                          service.serviceLinkedRolesLink
+                        )}
                       </TableCell>
                     </TableRow>
                   ))
@@ -561,5 +436,5 @@ export default function AWSIAMServicesTable() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
