@@ -1,4 +1,5 @@
-// @see https://apps.abacus.ai/chatllm/?appId=161612e9fa&convoId=c2d39cd6f
+// Generated from table.html
+// @see https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html
 
 export interface ServiceData {
   service: string;
@@ -460,12 +461,12 @@ export const servicesData: ServiceData[] = [
       "https://docs.aws.amazon.com/batch/latest/userguide/IAM_policies.html",
     actions: "Yes",
     resourceLevel: "Partial",
-    resourceLevelLink:
-      "https://docs.aws.amazon.com/batch/latest/userguide/batch-supported-iam-actions-resources.html",
     resourceBased: "No",
     abac: "Yes",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "Yes",
+    resourceLevelLink:
+      "https://docs.aws.amazon.com/batch/latest/userguide/batch-supported-iam-actions-resources.html",
     serviceLinkedRolesLink:
       "https://docs.aws.amazon.com/batch/latest/userguide/using-service-linked-roles.html",
   },
@@ -691,10 +692,10 @@ export const servicesData: ServiceData[] = [
     resourceLevel: "Yes",
     resourceBased: "No",
     abac: "Partial",
-    abacLink:
-      "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/security_iam_service-with-iam.html#security_iam_service-with-iam-tags",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "Yes",
+    abacLink:
+      "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/security_iam_service-with-iam.html#security_iam_service-with-iam-tags",
     serviceLinkedRolesLink:
       "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-service-linked-roles.html",
   },
@@ -762,11 +763,11 @@ export const servicesData: ServiceData[] = [
     actions: "Yes",
     resourceLevel: "Yes",
     resourceBased: "Partial",
-    resourceBasedLink:
-      "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/security_iam_resource-based-policy-examples.html",
     abac: "Yes",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "Yes",
+    resourceBasedLink:
+      "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/security_iam_resource-based-policy-examples.html",
     serviceLinkedRolesLink:
       "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/using-service-linked-roles.html",
   },
@@ -846,10 +847,10 @@ export const servicesData: ServiceData[] = [
     resourceLevel: "Yes",
     resourceBased: "Yes",
     abac: "Partial",
-    abacLink:
-      "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/iam-identity-based-access-control-cwl.html",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "Yes",
+    abacLink:
+      "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/iam-identity-based-access-control-cwl.html",
     serviceLinkedRolesLink:
       "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/using-service-linked-roles-cwl.html",
   },
@@ -906,11 +907,11 @@ export const servicesData: ServiceData[] = [
     actions: "Yes",
     resourceLevel: "Yes",
     resourceBased: "Yes",
-    resourceBasedLink:
-      "https://docs.aws.amazon.com/codeartifact/latest/ug/repo-policies.html",
     abac: "Yes",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "No",
+    resourceBasedLink:
+      "https://docs.aws.amazon.com/codeartifact/latest/ug/repo-policies.html",
   },
   {
     service: "AWS CodeBuild",
@@ -919,11 +920,11 @@ export const servicesData: ServiceData[] = [
     actions: "Yes",
     resourceLevel: "Yes",
     resourceBased: "Yes",
-    resourceBasedLink: "#swwiam_footnotes_codebuild",
     abac: "Partial",
-    abacLink: "#swwiam_footnotes_codebuild",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "No",
+    resourceBasedLink: "#swwiam_footnotes_codebuild",
+    abacLink: "#swwiam_footnotes_codebuild",
   },
   {
     service: "Amazon CodeCatalyst",
@@ -1159,11 +1160,11 @@ export const servicesData: ServiceData[] = [
       "https://docs.aws.amazon.com/config/latest/developerguide/recommended-iam-permissions-using-aws-config-console-cli.html",
     actions: "Yes",
     resourceLevel: "Partial",
-    resourceLevelLink: "#swwiam_footnotes_config",
     resourceBased: "No",
     abac: "Yes",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "Yes",
+    resourceLevelLink: "#swwiam_footnotes_config",
     serviceLinkedRolesLink:
       "https://docs.aws.amazon.com/config/latest/developerguide/using-service-linked-roles.html",
   },
@@ -1321,10 +1322,10 @@ export const servicesData: ServiceData[] = [
     actions: "Yes",
     resourceLevel: "Yes",
     resourceBased: "No",
-    resourceBasedLink: "#swwiam_footnotes_dms",
     abac: "Yes",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "Yes",
+    resourceBasedLink: "#swwiam_footnotes_dms",
     serviceLinkedRolesLink:
       "https://docs.aws.amazon.com/dms/latest/userguide/using-service-linked-roles.html",
   },
@@ -1371,10 +1372,10 @@ export const servicesData: ServiceData[] = [
     resourceLevel: "Yes",
     resourceBased: "No",
     abac: "Partial",
-    abacLink:
-      "https://docs.aws.amazon.com/datapipeline/latest/DeveloperGuide/dp-iam-resourcebased-access.html#dp-control-access-tags",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "No",
+    abacLink:
+      "https://docs.aws.amazon.com/datapipeline/latest/DeveloperGuide/dp-iam-resourcebased-access.html#dp-control-access-tags",
   },
   {
     service: "AWS DataSync",
@@ -1460,7 +1461,7 @@ export const servicesData: ServiceData[] = [
       "https://docs.aws.amazon.com/devicefarm/latest/developerguide/using-service-linked-roles.html",
   },
   {
-    service: "Amazon DevOps Guru",
+    service: "Amazon DevOps Guru",
     serviceLink:
       "https://docs.aws.amazon.com/devops-guru/latest/userguide/security-iam.html",
     actions: "Yes",
@@ -1491,10 +1492,10 @@ export const servicesData: ServiceData[] = [
     resourceLevel: "Yes",
     resourceBased: "No",
     abac: "Yes",
-    abacLink:
-      "https://docs.aws.amazon.com/directconnect/latest/UserGuide/using_tags.html",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "Yes",
+    abacLink:
+      "https://docs.aws.amazon.com/directconnect/latest/UserGuide/using_tags.html",
     serviceLinkedRolesLink:
       "https://docs.aws.amazon.com/directconnect/latest/UserGuide/using-service-linked-roles.html",
   },
@@ -1567,10 +1568,10 @@ export const servicesData: ServiceData[] = [
     resourceLevel: "Partial",
     resourceBased: "No",
     abac: "Yes",
-    abacLink:
-      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html#tag-resources",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "Partial",
+    abacLink:
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html#tag-resources",
     serviceLinkedRolesLink: "#swwiam_footnotes_ec2",
   },
   {
@@ -1620,10 +1621,10 @@ export const servicesData: ServiceData[] = [
     resourceLevel: "Partial",
     resourceBased: "No",
     abac: "Yes",
-    abacLink:
-      "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/AWSHowTo.iam.policies.access-tags.html",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "Yes",
+    abacLink:
+      "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/AWSHowTo.iam.policies.access-tags.html",
     serviceLinkedRolesLink:
       "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-service-linked-roles.html",
   },
@@ -1667,11 +1668,11 @@ export const servicesData: ServiceData[] = [
     serviceLink: "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/",
     actions: "Yes",
     resourceLevel: "Partial",
-    resourceLevelLink: "#swwiam_footnotes_ecs",
     resourceBased: "No",
     abac: "Yes",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "Yes",
+    resourceLevelLink: "#swwiam_footnotes_ecs",
     serviceLinkedRolesLink:
       "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using-service-linked-roles.html",
   },
@@ -1695,9 +1696,9 @@ export const servicesData: ServiceData[] = [
     resourceLevel: "Yes",
     resourceBased: "Yes",
     abac: "Partial",
-    abacLink: "https://docs.aws.amazon.com/efs/latest/ug/using-tags-efs.html",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "Yes",
+    abacLink: "https://docs.aws.amazon.com/efs/latest/ug/using-tags-efs.html",
     serviceLinkedRolesLink:
       "https://docs.aws.amazon.com/efs/latest/ug/using-service-linked-roles.html",
   },
@@ -1818,10 +1819,10 @@ export const servicesData: ServiceData[] = [
     resourceLevel: "Yes",
     resourceBased: "No",
     abac: "Yes",
-    abacLink:
-      "https://docs.aws.amazon.com/mediaconvert/latest/ug/example-policies.html#example-policy-tag-based-access-control-using-resource-tags",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "No",
+    abacLink:
+      "https://docs.aws.amazon.com/mediaconvert/latest/ug/example-policies.html#example-policy-tag-based-access-control-using-resource-tags",
   },
   {
     service: "AWS Elemental MediaLive",
@@ -2000,11 +2001,11 @@ export const servicesData: ServiceData[] = [
     actions: "Yes",
     resourceLevel: "Yes",
     resourceBased: "Yes",
-    resourceBasedLink:
-      "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-bus-perms.html",
     abac: "Yes",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "No",
+    resourceBasedLink:
+      "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-bus-perms.html",
   },
   {
     service: "Amazon EventBridge Pipes",
@@ -2035,11 +2036,11 @@ export const servicesData: ServiceData[] = [
     actions: "Yes",
     resourceLevel: "Yes",
     resourceBased: "Yes",
-    resourceBasedLink:
-      "https://docs.aws.amazon.com/eventbridge/latest/userguide/resource-based-policies-schemas.html",
     abac: "Yes",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "No",
+    resourceBasedLink:
+      "https://docs.aws.amazon.com/eventbridge/latest/userguide/resource-based-policies-schemas.html",
   },
   {
     service: "AWS Fault Injection Service",
@@ -2201,9 +2202,9 @@ export const servicesData: ServiceData[] = [
     resourceLevel: "Yes",
     resourceBased: "Yes",
     abac: "Partial",
-    abacLink: "https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "No",
+    abacLink: "https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html",
   },
   {
     service: "AWS Glue DataBrew",
@@ -2349,11 +2350,11 @@ export const servicesData: ServiceData[] = [
     actions: "Yes",
     resourceLevel: "Yes",
     resourceBased: "Partial",
-    resourceBasedLink: "#swwiam_footnotes_iam",
     abac: "Partial",
-    abacLink: "./access_iam-tags.html",
     temporaryCredentials: "Partial",
     serviceLinkedRoles: "No",
+    resourceBasedLink: "#swwiam_footnotes_iam",
+    abacLink: "./access_iam-tags.html",
   },
   {
     service: "AWS Identity and Access Management and Access Analyzer",
@@ -2512,15 +2513,15 @@ export const servicesData: ServiceData[] = [
       "https://docs.aws.amazon.com/iot/latest/developerguide/iot-security-identity.html",
     actions: "Yes",
     resourceLevel: "Yes",
-    resourceLevelLink:
-      "https://docs.aws.amazon.com/iot/latest/developerguide/action-resources.html",
     resourceBased: "Partial",
-    resourceBasedLink: "#swwiam_footnotes_iot",
     abac: "Yes",
-    abacLink:
-      "https://docs.aws.amazon.com/iot/latest/developerguide/tagging-iot-iam.html",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "No",
+    resourceLevelLink:
+      "https://docs.aws.amazon.com/iot/latest/developerguide/action-resources.html",
+    resourceBasedLink: "#swwiam_footnotes_iot",
+    abacLink:
+      "https://docs.aws.amazon.com/iot/latest/developerguide/tagging-iot-iam.html",
   },
   {
     service: "AWS IoT Core Device Advisor",
@@ -2585,10 +2586,10 @@ export const servicesData: ServiceData[] = [
     resourceLevel: "Yes",
     resourceBased: "No",
     abac: "Partial",
-    abacLink:
-      "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiotgreengrassv2.html",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "No",
+    abacLink:
+      "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiotgreengrassv2.html",
   },
   {
     service: "AWS IoT Jobs DataPlane",
@@ -2797,13 +2798,13 @@ export const servicesData: ServiceData[] = [
     actions: "Yes",
     resourceLevel: "Yes",
     resourceBased: "Yes",
-    resourceBasedLink:
-      "https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html",
     abac: "Partial",
-    abacLink:
-      "https://docs.aws.amazon.com/lambda/latest/dg/attribute-based-access-control.html",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "Partial",
+    resourceBasedLink:
+      "https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html",
+    abacLink:
+      "https://docs.aws.amazon.com/lambda/latest/dg/attribute-based-access-control.html",
     serviceLinkedRolesLink:
       "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-edge-permissions.html#using-service-linked-roles",
   },
@@ -2837,11 +2838,11 @@ export const servicesData: ServiceData[] = [
     actions: "Yes",
     resourceLevel: "Yes",
     resourceBased: "Yes",
-    resourceBasedLink:
-      "https://docs.aws.amazon.com/lexv2/latest/dg/security_iam_service-with-iam.html#security_iam_service-with-iam-resource-based-policies",
     abac: "Yes",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "Yes",
+    resourceBasedLink:
+      "https://docs.aws.amazon.com/lexv2/latest/dg/security_iam_service-with-iam.html#security_iam_service-with-iam-resource-based-policies",
     serviceLinkedRolesLink:
       "https://docs.aws.amazon.com/lexv2/latest/dg/using-service-linked-roles.html",
   },
@@ -2887,12 +2888,12 @@ export const servicesData: ServiceData[] = [
     serviceLink: "https://lightsail.aws.amazon.com/ls/docs/all",
     actions: "Yes",
     resourceLevel: "Partial",
-    resourceLevelLink: "#swwiam_footnotes_lightsail",
     resourceBased: "No",
     abac: "Partial",
-    abacLink: "#swwiam_footnotes_lightsail",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "Yes",
+    resourceLevelLink: "#swwiam_footnotes_lightsail",
+    abacLink: "#swwiam_footnotes_lightsail",
     serviceLinkedRolesLink:
       "https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-using-service-linked-roles",
   },
@@ -3072,10 +3073,10 @@ export const servicesData: ServiceData[] = [
     actions: "Yes",
     resourceLevel: "Yes",
     resourceBased: "Partial",
-    resourceBasedLink: "#swwiam_footnotes_msk",
     abac: "Yes",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "Yes",
+    resourceBasedLink: "#swwiam_footnotes_msk",
     serviceLinkedRolesLink:
       "https://docs.aws.amazon.com/msk/latest/developerguide/using-service-linked-roles.html",
   },
@@ -3435,9 +3436,9 @@ export const servicesData: ServiceData[] = [
     resourceLevel: "Yes",
     resourceBased: "No",
     abac: "Partial",
-    abacLink: "#swwiam_footnotes_mpa",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "No",
+    abacLink: "#swwiam_footnotes_mpa",
   },
   {
     service: "Amazon Neptune Analytics",
@@ -3814,11 +3815,11 @@ export const servicesData: ServiceData[] = [
     actions: "Yes",
     resourceLevel: "Yes",
     resourceBased: "Yes",
-    resourceBasedLink:
-      "https://docs.aws.amazon.com/privateca/latest/userguide/pca-rbp.html",
     abac: "Yes",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "No",
+    resourceBasedLink:
+      "https://docs.aws.amazon.com/privateca/latest/userguide/pca-rbp.html",
   },
   {
     service: "AWS PrivateLink",
@@ -4002,10 +4003,10 @@ export const servicesData: ServiceData[] = [
     actions: "Yes",
     resourceLevel: "Yes",
     resourceBased: "Partial",
-    resourceBasedLink: "#swwiam_footnotes_rekognition",
     abac: "Yes",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "No",
+    resourceBasedLink: "#swwiam_footnotes_rekognition",
   },
   {
     service: "Amazon Relational Database Service (Amazon RDS)",
@@ -4113,15 +4114,15 @@ export const servicesData: ServiceData[] = [
     resourceLevel: "Yes",
     resourceBased: "No",
     abac: "Yes",
-    abacLink:
-      "https://docs.aws.amazon.com/robomaker/latest/dg/auth-and-access-control.html",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "Yes",
+    abacLink:
+      "https://docs.aws.amazon.com/robomaker/latest/dg/auth-and-access-control.html",
     serviceLinkedRolesLink:
       "https://docs.aws.amazon.com/robomaker/latest/dg/using-service-linked-roles.html",
   },
   {
-    service: "Amazon Route 53",
+    service: "Amazon Route 53",
     serviceLink:
       "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/auth-and-access-control.html",
     actions: "Yes",
@@ -4132,7 +4133,7 @@ export const servicesData: ServiceData[] = [
     serviceLinkedRoles: "No",
   },
   {
-    service: "Amazon Route 53 Domains",
+    service: "Amazon Route 53 Domains",
     serviceLink:
       "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html",
     actions: "Yes",
@@ -4143,7 +4144,7 @@ export const servicesData: ServiceData[] = [
     serviceLinkedRoles: "No",
   },
   {
-    service: "Amazon Route 53 Profiles",
+    service: "Amazon Route 53 Profiles",
     serviceLink:
       "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/profiles.html",
     actions: "Yes",
@@ -4154,7 +4155,7 @@ export const servicesData: ServiceData[] = [
     serviceLinkedRoles: "No",
   },
   {
-    service: "Amazon Route 53 Recovery Cluster",
+    service: "Amazon Route 53 Recovery Cluster",
     serviceLink:
       "https://docs.aws.amazon.com/r53recovery/latest/dg/what-is-route53-recovery.html",
     actions: "Yes",
@@ -4165,7 +4166,7 @@ export const servicesData: ServiceData[] = [
     serviceLinkedRoles: "No",
   },
   {
-    service: "Amazon Route 53 Recovery Control Config",
+    service: "Amazon Route 53 Recovery Control Config",
     serviceLink:
       "https://docs.aws.amazon.com/r53recovery/latest/dg/what-is-route53-recovery.html",
     actions: "Yes",
@@ -4176,7 +4177,7 @@ export const servicesData: ServiceData[] = [
     serviceLinkedRoles: "No",
   },
   {
-    service: "Amazon Route 53 Recovery Readiness",
+    service: "Amazon Route 53 Recovery Readiness",
     serviceLink:
       "https://docs.aws.amazon.com/r53recovery/latest/dg/what-is-route53-recovery.html",
     actions: "Yes",
@@ -4189,7 +4190,7 @@ export const servicesData: ServiceData[] = [
       "https://docs.aws.amazon.com/r53recovery/latest/dg/using-service-linked-roles.html",
   },
   {
-    service: "Amazon Route 53 Resolver",
+    service: "Amazon Route 53 Resolver",
     serviceLink:
       "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/auth-and-access-control.html",
     actions: "Yes",
@@ -4298,11 +4299,11 @@ export const servicesData: ServiceData[] = [
     actions: "Yes",
     resourceLevel: "Yes",
     resourceBased: "Yes",
-    resourceBasedLink:
-      "https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access_resource-based-policies.html",
     abac: "Yes",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "No",
+    resourceBasedLink:
+      "https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access_resource-based-policies.html",
   },
   {
     service: "AWS Security Hub",
@@ -4349,11 +4350,11 @@ export const servicesData: ServiceData[] = [
       "https://docs.aws.amazon.com/STS/latest/UsingSTS/TokenPermissions.html",
     actions: "Yes",
     resourceLevel: "Partial",
-    resourceLevelLink: "#swwiam_footnotes_sts",
     resourceBased: "No",
     abac: "Yes",
     temporaryCredentials: "Partial",
     serviceLinkedRoles: "No",
+    resourceLevelLink: "#swwiam_footnotes_sts",
   },
   {
     service: "AWS Serverless Application Repository",
@@ -4455,11 +4456,11 @@ export const servicesData: ServiceData[] = [
       "https://docs.aws.amazon.com/ses/latest/DeveloperGuide/Welcome.html",
     actions: "Yes",
     resourceLevel: "Partial",
-    resourceLevelLink: "#swwiam_footnotes_ses",
     resourceBased: "Yes",
     abac: "Yes",
     temporaryCredentials: "Partial",
     serviceLinkedRoles: "Yes",
+    resourceLevelLink: "#swwiam_footnotes_ses",
     serviceLinkedRolesLink:
       "https://docs.aws.amazon.com/ses/latest/dg/using-service-linked-roles.html",
   },
@@ -4481,11 +4482,11 @@ export const servicesData: ServiceData[] = [
     actions: "Yes",
     resourceLevel: "Yes",
     resourceBased: "Yes",
-    abac: "Yes",
-    abacLink:
-      "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-abac.html",
+    abac: "Partial",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "No",
+    abacLink:
+      "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-abac.html",
   },
   {
     service: "Amazon Simple Storage Service (Amazon S3)",
@@ -4495,10 +4496,10 @@ export const servicesData: ServiceData[] = [
     resourceLevel: "Yes",
     resourceBased: "Yes",
     abac: "Partial",
-    abacLink:
-      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-tagging.html",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "Partial",
+    abacLink:
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-tagging.html",
     serviceLinkedRolesLink:
       "https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-service-linked-roles.html",
   },
@@ -4612,10 +4613,10 @@ export const servicesData: ServiceData[] = [
     resourceLevel: "Yes",
     resourceBased: "No",
     abac: "Yes",
-    abacLink:
-      "https://docs.aws.amazon.com/step-functions/latest/dg/tag-based-policies.html",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "No",
+    abacLink:
+      "https://docs.aws.amazon.com/step-functions/latest/dg/tag-based-policies.html",
   },
   {
     service: "AWS Storage Gateway",
@@ -4748,11 +4749,11 @@ export const servicesData: ServiceData[] = [
     actions: "Yes",
     resourceLevel: "Yes",
     resourceBased: "Yes",
-    resourceBasedLink:
-      "https://docs.aws.amazon.com/incident-manager/latest/userguide/security_iam_resource-based-policy-examples.html",
     abac: "Yes",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "Yes",
+    resourceBasedLink:
+      "https://docs.aws.amazon.com/incident-manager/latest/userguide/security_iam_resource-based-policy-examples.html",
     serviceLinkedRolesLink:
       "https://docs.aws.amazon.com/incident-manager/latest/userguide/using-service-linked-roles.html",
   },
@@ -4763,11 +4764,11 @@ export const servicesData: ServiceData[] = [
     actions: "Yes",
     resourceLevel: "Yes",
     resourceBased: "Yes",
-    resourceBasedLink:
-      "https://docs.aws.amazon.com/incident-manager/latest/userguide/security_iam_resource-based-policy-examples.html",
     abac: "No",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "No",
+    resourceBasedLink:
+      "https://docs.aws.amazon.com/incident-manager/latest/userguide/security_iam_resource-based-policy-examples.html",
   },
   {
     service: "AWS Systems Manager Quick Setup",
@@ -4915,7 +4916,7 @@ export const servicesData: ServiceData[] = [
       "https://docs.aws.amazon.com/awssupport/latest/user/using-service-linked-roles-ta.html",
   },
   {
-    service: "AWS User Notifications",
+    service: "No",
     serviceLink:
       "https://docs.aws.amazon.com/notifications/latest/userguide/security-iam.html",
     actions: "Yes",
@@ -4928,7 +4929,7 @@ export const servicesData: ServiceData[] = [
       "https://docs.aws.amazon.com/notifications/latest/userguide/using-service-linked-roles.html",
   },
   {
-    service: "AWS User Notifications Contacts",
+    service: "No",
     serviceLink:
       "https://docs.aws.amazon.com/notifications/latest/userguide/security-iam.html",
     actions: "Yes",
@@ -4977,12 +4978,12 @@ export const servicesData: ServiceData[] = [
       "https://docs.aws.amazon.com/vpc/latest/userguide/VPC_IAM.html",
     actions: "Yes",
     resourceLevel: "Partial",
-    resourceLevelLink: "#swwiam_footnotes_vpc",
     resourceBased: "Partial",
-    resourceBasedLink: "#swwiam_footnotes_vpc",
     abac: "Yes",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "Partial",
+    resourceLevelLink: "#swwiam_footnotes_vpc",
+    resourceBasedLink: "#swwiam_footnotes_vpc",
     serviceLinkedRolesLink:
       "https://docs.aws.amazon.com/vpc/latest/tgw/service-linked-roles.html",
   },
@@ -5147,13 +5148,13 @@ export const servicesData: ServiceData[] = [
       "https://docs.aws.amazon.com/xray/latest/devguide/xray-permissions.html",
     actions: "Yes",
     resourceLevel: "Partial",
-    resourceLevelLink:
-      "https://docs.aws.amazon.com/xray/latest/devguide/security_iam_id-based-policy-examples.html#xray-permissions-resources)",
     resourceBased: "No",
     abac: "Partial",
-    abacLink: "#swwiam_footnotes_xray",
     temporaryCredentials: "Yes",
     serviceLinkedRoles: "No",
+    resourceLevelLink:
+      "https://docs.aws.amazon.com/xray/latest/devguide/security_iam_id-based-policy-examples.html#xray-permissions-resources)",
+    abacLink: "#swwiam_footnotes_xray",
   },
 ];
 
