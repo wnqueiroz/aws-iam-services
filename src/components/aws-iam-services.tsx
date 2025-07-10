@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useMemo } from "react";
+import { useQueryState } from "nuqs";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -64,7 +65,7 @@ function EmptyState({
   hasActiveFilters,
   clearAllFilters,
 }: {
-  searchTerm: string;
+  searchTerm: string | null;
   hasActiveFilters: boolean;
   clearAllFilters: () => void;
 }) {
@@ -104,7 +105,6 @@ function EmptyState({
       )}
       <div className="flex flex-col sm:flex-row gap-2">
         <button
-          // onClick={() => window.location.reload()}
           onClick={() => clearAllFilters()}
           className="px-4 py-2 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
         >
@@ -116,44 +116,73 @@ function EmptyState({
 }
 
 export default function AWSIAMServicesTable() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [actionsFilter, setActionsFilter] = useState("all");
-  const [resourceLevelFilter, setResourceLevelFilter] = useState("all");
-  const [resourceBasedFilter, setResourceBasedFilter] = useState("all");
-  const [abacFilter, setAbacFilter] = useState("all");
+  const [searchTerm, setSearchTerm] = useQueryState("search", {
+    defaultValue: "",
+  });
+  const [actionsFilter, setActionsFilter] = useQueryState("actions", {
+    defaultValue: "all",
+  });
+  const [resourceLevelFilter, setResourceLevelFilter] = useQueryState(
+    "resourceLevel",
+    {
+      defaultValue: "all",
+    }
+  );
+  const [resourceBasedFilter, setResourceBasedFilter] = useQueryState(
+    "resourceBased",
+    {
+      defaultValue: "all",
+    }
+  );
+  const [abacFilter, setAbacFilter] = useQueryState("abac", {
+    defaultValue: "all",
+  });
   const [temporaryCredentialsFilter, setTemporaryCredentialsFilter] =
-    useState("all");
-  const [serviceLinkedRolesFilter, setServiceLinkedRolesFilter] =
-    useState("all");
+    useQueryState("temporaryCredentials", {
+      defaultValue: "all",
+    });
+  const [serviceLinkedRolesFilter, setServiceLinkedRolesFilter] = useQueryState(
+    "serviceLinkedRoles",
+    {
+      defaultValue: "all",
+    }
+  );
 
   const clearAllFilters = () => {
-    setSearchTerm("");
-    setActionsFilter("all");
-    setResourceLevelFilter("all");
-    setResourceBasedFilter("all");
-    setAbacFilter("all");
-    setTemporaryCredentialsFilter("all");
-    setServiceLinkedRolesFilter("all");
+    setSearchTerm(null);
+    setActionsFilter(null);
+    setResourceLevelFilter(null);
+    setResourceBasedFilter(null);
+    setAbacFilter(null);
+    setTemporaryCredentialsFilter(null);
+    setServiceLinkedRolesFilter(null);
   };
 
   const filteredData = useMemo(() => {
     return servicesData.filter((service) => {
       const matchesSearch = service.service
         .toLowerCase()
-        .includes(searchTerm.toLowerCase());
+        .includes((searchTerm || "").toLowerCase());
       const matchesActions =
-        actionsFilter === "all" || service.actions === actionsFilter;
+        !actionsFilter ||
+        actionsFilter === "all" ||
+        service.actions === actionsFilter;
       const matchesResourceLevel =
+        !resourceLevelFilter ||
         resourceLevelFilter === "all" ||
         service.resourceLevel === resourceLevelFilter;
       const matchesResourceBased =
+        !resourceBasedFilter ||
         resourceBasedFilter === "all" ||
         service.resourceBased === resourceBasedFilter;
-      const matchesAbac = abacFilter === "all" || service.abac === abacFilter;
+      const matchesAbac =
+        !abacFilter || abacFilter === "all" || service.abac === abacFilter;
       const matchesTemporaryCredentials =
+        !temporaryCredentialsFilter ||
         temporaryCredentialsFilter === "all" ||
         service.temporaryCredentials === temporaryCredentialsFilter;
       const matchesServiceLinkedRoles =
+        !serviceLinkedRolesFilter ||
         serviceLinkedRolesFilter === "all" ||
         service.serviceLinkedRoles === serviceLinkedRolesFilter;
 
@@ -184,14 +213,14 @@ export default function AWSIAMServicesTable() {
     return values.filter((value) => value && value !== "");
   };
 
-  const hasActiveFilters = () => {
-    return (
-      actionsFilter !== "all" ||
-      resourceLevelFilter !== "all" ||
-      resourceBasedFilter !== "all" ||
-      abacFilter !== "all" ||
-      temporaryCredentialsFilter !== "all" ||
-      serviceLinkedRolesFilter !== "all"
+  const hasActiveFilters = (): boolean => {
+    return Boolean(
+      (actionsFilter && actionsFilter !== "all") ||
+        (resourceLevelFilter && resourceLevelFilter !== "all") ||
+        (resourceBasedFilter && resourceBasedFilter !== "all") ||
+        (abacFilter && abacFilter !== "all") ||
+        (temporaryCredentialsFilter && temporaryCredentialsFilter !== "all") ||
+        (serviceLinkedRolesFilter && serviceLinkedRolesFilter !== "all")
     );
   };
 
@@ -224,8 +253,8 @@ export default function AWSIAMServicesTable() {
               <label className="text-sm font-medium">Search Services</label>
               <Input
                 placeholder="Search services..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                value={searchTerm || ""}
+                onChange={(e) => setSearchTerm(e.target.value || null)}
               />
             </div>
 
@@ -287,7 +316,12 @@ export default function AWSIAMServicesTable() {
                   </DialogContent>
                 </Dialog>
               </div>
-              <Select value={actionsFilter} onValueChange={setActionsFilter}>
+              <Select
+                value={actionsFilter || "all"}
+                onValueChange={(value) =>
+                  setActionsFilter(value === "all" ? null : value)
+                }
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Filter by Actions" />
                 </SelectTrigger>
@@ -374,8 +408,10 @@ export default function AWSIAMServicesTable() {
                 </Dialog>
               </div>
               <Select
-                value={resourceLevelFilter}
-                onValueChange={setResourceLevelFilter}
+                value={resourceLevelFilter || "all"}
+                onValueChange={(value) =>
+                  setResourceLevelFilter(value === "all" ? null : value)
+                }
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Filter by Resource-level" />
@@ -449,8 +485,10 @@ export default function AWSIAMServicesTable() {
               </div>
 
               <Select
-                value={resourceBasedFilter}
-                onValueChange={setResourceBasedFilter}
+                value={resourceBasedFilter || "all"}
+                onValueChange={(value) =>
+                  setResourceBasedFilter(value === "all" ? null : value)
+                }
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Filter by Resource-based" />
@@ -524,7 +562,12 @@ export default function AWSIAMServicesTable() {
                   </DialogContent>
                 </Dialog>
               </div>
-              <Select value={abacFilter} onValueChange={setAbacFilter}>
+              <Select
+                value={abacFilter || "all"}
+                onValueChange={(value) =>
+                  setAbacFilter(value === "all" ? null : value)
+                }
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Filter by ABAC" />
                 </SelectTrigger>
@@ -596,8 +639,10 @@ export default function AWSIAMServicesTable() {
                 </Dialog>
               </div>
               <Select
-                value={temporaryCredentialsFilter}
-                onValueChange={setTemporaryCredentialsFilter}
+                value={temporaryCredentialsFilter || "all"}
+                onValueChange={(value) =>
+                  setTemporaryCredentialsFilter(value === "all" ? null : value)
+                }
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Filter by Temporary credentials" />
@@ -668,8 +713,10 @@ export default function AWSIAMServicesTable() {
                 </Dialog>
               </div>
               <Select
-                value={serviceLinkedRolesFilter}
-                onValueChange={setServiceLinkedRolesFilter}
+                value={serviceLinkedRolesFilter || "all"}
+                onValueChange={(value) =>
+                  setServiceLinkedRolesFilter(value === "all" ? null : value)
+                }
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Filter by Service-linked roles" />
