@@ -1,9 +1,10 @@
-import AWSIAMServicesTable from "@/components/aws-iam-services"
+import AWSIAMServicesTable from "@/components/aws-iam-services";
+import { Suspense } from "react";
 
 export default function Page() {
   return (
-    <div>
+    <Suspense fallback={<div>Loading...</div>}>
       <AWSIAMServicesTable />
-    </div>
-  )
+    </Suspense>
+  );
 }
