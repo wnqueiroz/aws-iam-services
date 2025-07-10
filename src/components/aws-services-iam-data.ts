@@ -4008,7 +4008,7 @@ export const servicesData: ServiceData[] = [
     serviceLinkedRoles: "No",
   },
   {
-    service: "Amazon Relational Database Service (Amazon RDS) (",
+    service: "Amazon Relational Database Service (Amazon RDS)",
     serviceLink:
       "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAM.html",
     actions: "Yes",
