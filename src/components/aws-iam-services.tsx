@@ -22,6 +22,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 import servicesData, { ServiceData } from "./aws-services-iam-data";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
+import { CircleCheck, CircleX, Info } from "lucide-react";
 
 function Link({ children, href }: { href: string; children: React.ReactNode }) {
   return (
@@ -37,8 +46,8 @@ function Link({ children, href }: { href: string; children: React.ReactNode }) {
 }
 
 function formatValue(value: string, link?: string) {
-  if (value === "Yes") return "✅";
-  if (value === "No") return "❌";
+  if (value === "Yes") return <CircleCheck className="text-green-600" />;
+  if (value === "No") return <CircleX className="text-red-600" />;
   if (value === "Partial" && link) {
     return <Link href={link}>Partial</Link>;
   }
@@ -57,7 +66,7 @@ function EmptyState({
 }: {
   searchTerm: string;
   hasActiveFilters: boolean;
-  clearAllFilters: () => void
+  clearAllFilters: () => void;
 }) {
   return (
     <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
@@ -221,7 +230,63 @@ export default function AWSIAMServicesTable() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Actions</label>
+              <div className="flex items-center gap-1">
+                <label className="text-sm font-medium">Actions</label>
+                <Dialog>
+                  <DialogTrigger>
+                    <Info size={16} className="text-blue-600" />
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Actions</DialogTitle>
+                      <DialogDescription>
+                        Operations that can be performed on resources, such as{" "}
+                        <code className="text-red-500 bg-red-100 rounded">
+                          ec2:StartInstances
+                        </code>{" "}
+                        or{" "}
+                        <code className="text-red-500 bg-red-100 rounded">
+                          s3:PutObject
+                        </code>
+                        .
+                      </DialogDescription>
+                      <div className="mt-4 text-sm text-gray-700">
+                        <p className="mb-2">
+                          <strong>Comparison with others:</strong>
+                        </p>
+                        <ul className="list-disc pl-4 space-y-1">
+                          <li>
+                            <strong>Resource-level permissions:</strong> Actions
+                            define <em>what</em> you can do; resource-level
+                            permissions define <em>where</em>.
+                          </li>
+                          <li>
+                            <strong>Identity-based policies:</strong> Use
+                            actions to specify allowed operations.
+                          </li>
+                          <li>
+                            <strong>Resource-based policies:</strong> Also
+                            specify actions allowed on a resource.
+                          </li>
+                          <li>
+                            <strong>ABAC:</strong> ABAC policies still reference
+                            actions but control them conditionally via tags.
+                          </li>
+                          <li>
+                            <strong>Temporary credentials:</strong> The
+                            credentials inherit permissions for specific
+                            actions.
+                          </li>
+                          <li>
+                            <strong>Service-linked roles:</strong> Contain
+                            policies defining actions the service can perform.
+                          </li>
+                        </ul>
+                      </div>
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
+              </div>
               <Select value={actionsFilter} onValueChange={setActionsFilter}>
                 <SelectTrigger>
                   <SelectValue placeholder="Filter by Actions" />
@@ -238,9 +303,76 @@ export default function AWSIAMServicesTable() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">
-                Resource-level permissions
-              </label>
+              <div className="flex items-center gap-1">
+                <label className="text-sm font-medium">
+                  Resource-level permissions
+                </label>
+                <Dialog>
+                  <DialogTrigger>
+                    <Info size={16} className="text-blue-600" />
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle className="flex items-center gap-2">
+                        <Info size={16} className="text-blue-600" />
+                        Resource-level permissions
+                      </DialogTitle>
+                      <DialogDescription>
+                        The ability to grant permissions scoped to specific
+                        resources instead of granting access to all resources in
+                        a service.
+                      </DialogDescription>
+                      <div className="mt-8 text-sm text-gray-700">
+                        <p className="mb-2">
+                          <strong>Comparison with others:</strong>
+                        </p>
+                        <ul className="list-disc pl-4 space-y-1">
+                          <li>
+                            <strong>Actions:</strong> Resource-level permissions
+                            define <em>which resources</em> an <em>action</em>{" "}
+                            applies to. The action is{" "}
+                            <code className="text-red-500 bg-red-100 rounded">
+                              s3:GetObject
+                            </code>
+                            ; the resource-level permission says <em>where</em>{" "}
+                            it can be used.
+                          </li>
+                          <li>
+                            <strong>Identity-based policies:</strong> These can
+                            include resource-level permissions when you specify
+                            ARNs in the{" "}
+                            <code className="text-red-500 bg-red-100 rounded">
+                              Resource
+                            </code>{" "}
+                            element.
+                          </li>
+                          <li>
+                            <strong>Resource-based policies:</strong> Always
+                            attached to a resource and inherently define
+                            resource-level permissions.
+                          </li>
+                          <li>
+                            <strong>ABAC:</strong> Attribute-based control
+                            enforces resource constraints dynamically via tags,
+                            rather than static ARNs.
+                          </li>
+                          <li>
+                            <strong>Temporary credentials:</strong> Can carry
+                            resource-level permissions via the assumed role
+                            policies, but the credentials themselves just
+                            represent the session.
+                          </li>
+                          <li>
+                            <strong>Service-linked roles:</strong> Roles used by
+                            AWS services; their policies often include
+                            resource-level permissions to limit scope.
+                          </li>
+                        </ul>
+                      </div>
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
+              </div>
               <Select
                 value={resourceLevelFilter}
                 onValueChange={setResourceLevelFilter}
@@ -260,9 +392,62 @@ export default function AWSIAMServicesTable() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">
-                Resource-based policies
-              </label>
+              <div className="flex items-center gap-1">
+                <label className="text-sm font-medium">
+                  Resource-based policies
+                </label>
+
+                <Dialog>
+                  <DialogTrigger>
+                    <Info size={16} className="text-blue-600" />
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Resource-based policies</DialogTitle>
+                      <DialogDescription>
+                        Policies attached directly to a resource, stating who
+                        can access it and what actions are allowed.
+                      </DialogDescription>
+                      <div className="mt-4 text-sm text-gray-700">
+                        <p className="mb-2">
+                          <strong>Comparison with others:</strong>
+                        </p>
+                        <ul className="list-disc pl-4 space-y-1">
+                          <li>
+                            <strong>Resource-level permissions:</strong>{" "}
+                            Resource-based policies always define permissions
+                            scoped to the resource itself.
+                          </li>
+                          <li>
+                            <strong>Actions:</strong> Specify which operations
+                            are allowed on the resource.
+                          </li>
+                          <li>
+                            <strong>Identity-based policies:</strong> The
+                            alternative model where policies are attached to
+                            identities rather than resources.
+                          </li>
+                          <li>
+                            <strong>ABAC:</strong> Can include tag-based
+                            conditions for attribute-based access.
+                          </li>
+                          <li>
+                            <strong>Temporary credentials:</strong> The caller
+                            with temporary credentials can be authorized via
+                            resource-based policies.
+                          </li>
+                          <li>
+                            <strong>Service-linked roles:</strong> Resources may
+                            include policies granting access to service-linked
+                            roles.
+                          </li>
+                        </ul>
+                      </div>
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
+              </div>
+
               <Select
                 value={resourceBasedFilter}
                 onValueChange={setResourceBasedFilter}
@@ -282,7 +467,63 @@ export default function AWSIAMServicesTable() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">ABAC</label>
+              <div className="flex items-center gap-1">
+                <label className="text-sm font-medium">ABAC</label>
+                <Dialog>
+                  <DialogTrigger>
+                    <Info size={16} className="text-blue-600" />
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>
+                        ABAC (Attribute-Based Access Control)
+                      </DialogTitle>
+                      <DialogDescription>
+                        A model where access decisions are based on attributes
+                        (usually tags) rather than explicit ARNs.
+                      </DialogDescription>
+                      <div className="mt-4 text-sm text-gray-700">
+                        <p className="mb-3">
+                          <strong>What it is:</strong>
+                          <br />A model where access decisions are based on
+                          attributes (usually tags) rather than explicit ARNs.
+                        </p>
+                        <p className="mb-2">
+                          <strong>Comparison with others:</strong>
+                        </p>
+                        <ul className="list-disc pl-4 space-y-1">
+                          <li>
+                            <strong>Resource-level permissions:</strong> ABAC is
+                            a dynamic way to express resource constraints.
+                          </li>
+                          <li>
+                            <strong>Actions:</strong> ABAC still requires
+                            defining actions being controlled.
+                          </li>
+                          <li>
+                            <strong>Identity-based policies:</strong> ABAC is
+                            most often implemented via identity-based policies
+                            with conditions on tags.
+                          </li>
+                          <li>
+                            <strong>Resource-based policies:</strong> Can also
+                            include tag-based conditions.
+                          </li>
+                          <li>
+                            <strong>Temporary credentials:</strong> Session tags
+                            can be passed to enforce ABAC during assumed role
+                            sessions.
+                          </li>
+                          <li>
+                            <strong>Service-linked roles:</strong> Typically do
+                            not use ABAC; permissions are predefined by AWS.
+                          </li>
+                        </ul>
+                      </div>
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
+              </div>
               <Select value={abacFilter} onValueChange={setAbacFilter}>
                 <SelectTrigger>
                   <SelectValue placeholder="Filter by ABAC" />
@@ -299,9 +540,61 @@ export default function AWSIAMServicesTable() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">
-                Temporary credentials
-              </label>
+              <div className="flex items-center gap-1">
+                <label className="text-sm font-medium">
+                  Temporary credentials
+                </label>
+                <Dialog>
+                  <DialogTrigger>
+                    <Info size={16} className="text-blue-600" />
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Temporary credentials</DialogTitle>
+                      <DialogDescription>
+                        Short-lived credentials obtained via STS (e.g.,
+                        AssumeRole, federation) that represent a time-bounded
+                        session.
+                      </DialogDescription>
+                      <div className="mt-4 text-sm text-gray-700">
+                        <p className="mb-2">
+                          <strong>Comparison with others:</strong>
+                        </p>
+                        <ul className="list-disc pl-4 space-y-1">
+                          <li>
+                            <strong>Resource-level permissions:</strong> The
+                            permissions embedded in the session can include
+                            resource scoping.
+                          </li>
+                          <li>
+                            <strong>Actions:</strong> The assumed role or
+                            session policy specifies allowed actions.
+                          </li>
+                          <li>
+                            <strong>Identity-based policies:</strong> The
+                            effective permissions come from identity-based
+                            policies of the role assumed.
+                          </li>
+                          <li>
+                            <strong>Resource-based policies:</strong> May allow
+                            or deny access to the caller using temporary
+                            credentials.
+                          </li>
+                          <li>
+                            <strong>ABAC:</strong> Session tags support ABAC
+                            enforcement.
+                          </li>
+                          <li>
+                            <strong>Service-linked roles:</strong> When a
+                            service assumes a service-linked role, it uses
+                            temporary credentials under the hood.
+                          </li>
+                        </ul>
+                      </div>
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
+              </div>
               <Select
                 value={temporaryCredentialsFilter}
                 onValueChange={setTemporaryCredentialsFilter}
@@ -321,9 +614,59 @@ export default function AWSIAMServicesTable() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">
-                Service-linked roles
-              </label>
+              <div className="flex items-center gap-1">
+                <label className="text-sm font-medium">
+                  Service-linked roles
+                </label>
+                <Dialog>
+                  <DialogTrigger>
+                    <Info size={16} className="text-blue-600" />
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Service-linked roles</DialogTitle>
+                      <DialogDescription>
+                        Roles created and managed by AWS to allow a service to
+                        perform actions on your behalf.
+                      </DialogDescription>
+                      <div className="mt-4 text-sm text-gray-700">
+                        <p className="mb-2">
+                          <strong>Comparison with others:</strong>
+                        </p>
+                        <ul className="list-disc pl-4 space-y-1">
+                          <li>
+                            <strong>Resource-level permissions:</strong> Often
+                            have resource-level scope permissions needed by the
+                            service.
+                          </li>
+                          <li>
+                            <strong>Actions:</strong> Defined in the policies
+                            attached to the role.
+                          </li>
+                          <li>
+                            <strong>Identity-based policies:</strong>{" "}
+                            Service-linked roles are a type of role with
+                            attached policies.
+                          </li>
+                          <li>
+                            <strong>Resource-based policies:</strong> May permit
+                            access to service-linked roles.
+                          </li>
+                          <li>
+                            <strong>ABAC:</strong> Typically not applied to
+                            service-linked roles.
+                          </li>
+                          <li>
+                            <strong>Temporary credentials:</strong> Services
+                            assume these roles and use temporary credentials for
+                            operations.
+                          </li>
+                        </ul>
+                      </div>
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
+              </div>
               <Select
                 value={serviceLinkedRolesFilter}
                 onValueChange={setServiceLinkedRolesFilter}
@@ -401,31 +744,43 @@ export default function AWSIAMServicesTable() {
                         </a>
                       </TableCell>
                       <TableCell className="text-center">
-                        {formatValue(service.actions)}
+                        <div className="flex justify-center">
+                          {formatValue(service.actions)}
+                        </div>
                       </TableCell>
                       <TableCell className="text-center">
-                        {formatValue(
-                          service.resourceLevel,
-                          service.resourceLevelLink
-                        )}
+                        <div className="flex justify-center">
+                          {formatValue(
+                            service.resourceLevel,
+                            service.resourceLevelLink
+                          )}
+                        </div>
                       </TableCell>
                       <TableCell className="text-center">
-                        {formatValue(
-                          service.resourceBased,
-                          service.resourceBasedLink
-                        )}
+                        <div className="flex justify-center">
+                          {formatValue(
+                            service.resourceBased,
+                            service.resourceBasedLink
+                          )}
+                        </div>
                       </TableCell>
                       <TableCell className="text-center">
-                        {formatValue(service.abac, service.abacLink)}
+                        <div className="flex justify-center">
+                          {formatValue(service.abac, service.abacLink)}
+                        </div>
                       </TableCell>
                       <TableCell className="text-center">
-                        {formatValue(service.temporaryCredentials)}
+                        <div className="flex justify-center">
+                          {formatValue(service.temporaryCredentials)}
+                        </div>
                       </TableCell>
                       <TableCell className="text-center">
-                        {formatValue(
-                          service.serviceLinkedRoles,
-                          service.serviceLinkedRolesLink
-                        )}
+                        <div className="flex justify-center">
+                          {formatValue(
+                            service.serviceLinkedRoles,
+                            service.serviceLinkedRolesLink
+                          )}
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))
